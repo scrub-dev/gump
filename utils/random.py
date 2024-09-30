@@ -1,9 +1,3 @@
 import random
-
-def generate(lower = 0, upper = 1) -> int:
-    return random.randint(lower, upper)
-
-
-def array (array) -> str:
-    arrlen = len(array)
-    return array[generate(0, arrlen - 1)]
+generate = lambda l=0, u=1: random.randint(l, u)
+array = lambda a : a[generate(0, len(a) - 1)]
