@@ -22,7 +22,6 @@ def main() -> None:
         run(command)
         print()
 
-
 def printWelcomeMessage () -> None:
     conf = json.load(open("./configs/conf.json"))
     print(figlet.create(conf['NAME'].upper()) + "v" + conf["VERSION"])
@@ -45,5 +44,6 @@ def run(commandArray) -> None:
         module.run(command, commandArray[1::])
     else:
         print("Could not find the command " + commandName)
+        
 if __name__ == "__main__":
     main()

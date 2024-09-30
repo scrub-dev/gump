@@ -1,6 +1,6 @@
 {
     "NAME":"gump",
-    "VERSION": "0.3.1",
+    "VERSION": "0.3.2",
     "DESC" : "GUMP Command Runner | Run Forrest Run",
     "LOGGER_LEVEL" : "ERROR"
 }

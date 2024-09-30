@@ -4,9 +4,6 @@ import pyuac.admin
 import pyuac
 import itertools
 
-DEFAULT_SERVICE_ENV = "win"
-DEFAULT_SERVUCE_VERB = "start"
-
 def main(parameters) -> None:
 
     # Needs to be admin
@@ -21,6 +18,10 @@ def main(parameters) -> None:
     if args.service is None:
         print("No Service provided... stopping")
         return
+    
+    with open("./configs/service/conf.json") as conf:
+        DEFAULT_VERB = conf['DEFAULT_VERB'] or "start"
+        DEFAULT_ENV = conf['DEFAULT_ENV'] or "win"
 
     if "," in args.service:
         args.service = args.service.split(",")
@@ -29,9 +30,9 @@ def main(parameters) -> None:
     def getenv(s):
         if ":" in s: 
             _ = s.split(":", 1)
-            if _[0] not in ["wsl", "win"]: _[0] = DEFAULT_SERVICE_ENV
+            if _[0] not in ["wsl", "win"]: _[0] = DEFAULT_ENV
             return {"name":_[1], "env":_[0]}
-        else: return {"name":s, "env": DEFAULT_SERVICE_ENV}
+        else: return {"name":s, "env": DEFAULT_VERB}
 
     def getalias(s, list):
         if s in list:
