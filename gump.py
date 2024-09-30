@@ -2,6 +2,8 @@ import os
 import pathlib
 import sys
 import json
+
+import pyuac
 import utils.createFiglet as figlet
 import utils.loadModule as module
 import utils.random
@@ -46,4 +48,6 @@ def run(commandArray) -> None:
         print("Could not find the command " + commandName)
 
 if __name__ == "__main__":
+    if not pyuac.admin.isUserAdmin():
+        pyuac.admin.runAsAdmin()
     main()

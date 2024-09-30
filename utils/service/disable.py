@@ -1,5 +1,9 @@
 import asyncio
+import win32serviceutil
 
-async def execute(service) -> bool :
-    await asyncio.sleep(1)
+def execute(service) -> bool :
+    if service['env'] == 'win':
+        win32serviceutil.StopService(service['name'])
+    elif service['env'] == 'wsl':
+        return
     return True

@@ -8,6 +8,9 @@ import utils.service.enable
 import utils.service.disable
 import utils.service.process
 import utils.printer as printer
+import utils.wsl
+import utils.wsl.online
+
 
 def main(parameters) -> None:
 
@@ -61,23 +64,22 @@ def main(parameters) -> None:
         conflicts = json.load(conflicts)
         args.conflicts = list(itertools.chain.from_iterable(e for e in [getconflicts(s, conflicts) for s in args.service] if e is not None))
 
-    async def processConflicts(conflicts) -> None:
-        res = await asyncio.gather(*[utils.service.process.execute(conflict, 'stop') for conflict in conflicts])
+    def processConflicts(conflicts) -> None:
+        res = [utils.service.process.execute(conflict, 'stop') for conflict in conflicts]
         return res
 
-    async def processServices(services, verb):
-        res = await asyncio.gather(*[utils.service.process.execute(service, verb or DEFAULT_VERB) for service in services])
+    def processServices(services, verb):
+        res = [utils.service.process.execute(service, verb or DEFAULT_VERB) for service in services]
         return res
         
-    async def process():
+    def process():
         if args.conflicts and (args.verb != 'stop' or args.verb != 'restart'):
-            await processConflicts(args.conflicts)
-        await processServices(args.service, args.verb)
-        return 
+             processConflicts(args.conflicts)
+        processServices(args.service, args.verb)
+        return
+    process()
 
-    asyncio.run(process())
+    utils.wsl.online.check()
 
-    #disabled all conflicting service(s)
-    #enabled all required service(s)
 def help() -> None:
     return

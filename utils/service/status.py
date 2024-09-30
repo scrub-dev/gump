@@ -1,5 +1,23 @@
-import asyncio
+from enum import Enum
+import win32serviceutil
 
-async def execute(service) -> bool :
-    await asyncio.sleep(1)
-    return True
+class STATUS(Enum):
+    SERVICE_STOPPED = 1
+    SERVICE_STOP_PENDING = 3
+    SERVICE_START_PENDING = 2
+    SERVICE_RUNNING = 4
+    INVALID = 0
+
+    def text(input) -> str:
+        if input == 1: return "Stopped"
+        elif input == 2: return "Pending Start"
+        elif input == 3: return "Pending Stop"
+        elif input == 4: return "Stopped"
+        elif input == 0: return "Invalid"
+
+def execute(service) -> bool :
+    if service['env'] == 'win':
+        (serviceType, currentState, controlsAccepted, exitCode, serviceSpecificExitCode, checkPoint, waitHint) = win32serviceutil.QueryServiceStatus(service['name'])
+    elif service['env'] == 'wsl':
+        currentState = 0
+    return currentState

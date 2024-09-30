@@ -1,18 +1,35 @@
 import utils.printer as printer
 import utils.service.disable
 import utils.service.enable
+import utils.service.status as SERVICE
 
 
-async def execute(service, verb) -> bool :
+def execute(service, verb) -> bool :
+
+    # return await utils.service.status.execute(service)
+    state = SERVICE.STATUS(utils.service.status.execute(service))
+
+    if state == SERVICE.STATUS.INVALID:
+        return
+    
+
     if verb == 'start':
-        printer.console(f"Starting {service['name']} on {service['env']}", 2)
-        await utils.service.enable.execute(service)
+        if state != SERVICE.STATUS.SERVICE_RUNNING:
+            printer.console(f"Starting {service['name']} on {service['env']}", 2)
+            utils.service.enable.execute(service)
+        else: printer.console(f"{service['name']} already running on {service['env']}", 2)
+
     elif verb == 'stop':
-        printer.console(f"Stopping {service['name']} on {service['env']}", 2)
-        await utils.service.disable.execute(service)
+        if state != SERVICE.STATUS.SERVICE_STOPPED:
+            printer.console(f"Stopping {service['name']} on {service['env']}", 2)
+            utils.service.disable.execute(service)
+        else: printer.console(f"{service['name']} already stopped on {service['env']}", 2)
     elif verb == 'restart':
-        printer.console(f"Restarting {service['name']} on {service['env']}", 2)
-        await utils.service.disable.execute(service)
-        await utils.service.enable.execute(service)
+        if state != SERVICE.STATUS.SERVICE_STOPPED:
+            printer.console(f"Restarting {service['name']} on {service['env']}", 2)
+            utils.service.disable.execute(service)
+            utils.service.enable.execute(service)
+        else: printer.console(f"Restarting {service['name']} on {service['env']}", 2)
+
     else:
-        printer.console("Unrecognised Verb.. How did we get here?")
+        printer.console(f"Unrecognised Verb.. How did we get here? {verb}")

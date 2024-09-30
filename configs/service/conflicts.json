@@ -3,6 +3,6 @@
     "win:apache":       ["win:nginx-service"],
     "wsl:apache2":      ["wsl:nginx"],
     "wsl:nginx":        ["wsl:apache2"],
-    "wsl:opensearch":   ["wsl:elasticsearch"],
+    "wsl:opensearch270":   ["wsl:elasticsearch"],
     "wsl:elasticsearch":["wsl:opensearch"]
 }
