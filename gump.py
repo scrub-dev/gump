@@ -44,6 +44,6 @@ def run(commandArray) -> None:
         module.run(command, commandArray[1::])
     else:
         print("Could not find the command " + commandName)
-        
+
 if __name__ == "__main__":
     main()

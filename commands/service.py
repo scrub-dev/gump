@@ -3,6 +3,11 @@ import json
 import pyuac.admin
 import pyuac
 import itertools
+import asyncio
+import utils.service.enable
+import utils.service.disable
+import utils.service.process
+import utils.printer as printer
 
 def main(parameters) -> None:
 
@@ -20,6 +25,7 @@ def main(parameters) -> None:
         return
     
     with open("./configs/service/conf.json") as conf:
+        conf = json.load(conf)
         DEFAULT_VERB = conf['DEFAULT_VERB'] or "start"
         DEFAULT_ENV = conf['DEFAULT_ENV'] or "win"
 
@@ -32,7 +38,7 @@ def main(parameters) -> None:
             _ = s.split(":", 1)
             if _[0] not in ["wsl", "win"]: _[0] = DEFAULT_ENV
             return {"name":_[1], "env":_[0]}
-        else: return {"name":s, "env": DEFAULT_VERB}
+        else: return {"name":s, "env": DEFAULT_ENV}
 
     def getalias(s, list):
         if s in list:
@@ -45,6 +51,8 @@ def main(parameters) -> None:
             return [getenv(x) for x in list[confLookup]]
         else: return None
 
+    printer.console(f"Changing services for {','.join(args.service)}")
+
     with open("./configs/service/aliases.json") as aliases:
         aliases = json.load(aliases)
         args.service = list(itertools.chain.from_iterable(e for e in [getalias(s, aliases) for s in args.service] if e is not None))
@@ -53,8 +61,21 @@ def main(parameters) -> None:
         conflicts = json.load(conflicts)
         args.conflicts = list(itertools.chain.from_iterable(e for e in [getconflicts(s, conflicts) for s in args.service] if e is not None))
 
-    print(f"TO ENABLE: {args.service}")
-    print(f"TO DISABLE: {args.conflicts}")
+    async def processConflicts(conflicts) -> None:
+        res = await asyncio.gather(*[utils.service.process.execute(conflict, 'stop') for conflict in conflicts])
+        return res
+
+    async def processServices(services, verb):
+        res = await asyncio.gather(*[utils.service.process.execute(service, verb or DEFAULT_VERB) for service in services])
+        return res
+        
+    async def process():
+        if args.conflicts and (args.verb != 'stop' or args.verb != 'restart'):
+            await processConflicts(args.conflicts)
+        await processServices(args.service, args.verb)
+        return 
+
+    asyncio.run(process())
 
     #disabled all conflicting service(s)
     #enabled all required service(s)
