@@ -31,21 +31,18 @@ def main(parameters) -> None:
             _ = s.split(":", 1)
             if _[0] not in ["wsl", "win"]: _[0] = DEFAULT_SERVICE_ENV
             return {"name":_[1], "env":_[0]}
-        else: return {"name":s, "env":DEFAULT_SERVICE_ENV}
+        else: return {"name":s, "env": DEFAULT_SERVICE_ENV}
 
     def getalias(s, list):
-        if s['name'] in list:
-            return [getenv(e) for e in list[s['name']]]
-        else: return [s]
+        if s in list:
+            return [getenv(e) for e in list[s]]
+        else: return [getenv(s)]
 
     def getconflicts(s, list):
         confLookup = f"{s['env']}:{s['name']}"
         if confLookup in list:
             return [getenv(x) for x in list[confLookup]]
         else: return None
-
-
-    args.service = [getenv(s) for s in args.service]
 
     with open("./configs/service/aliases.json") as aliases:
         aliases = json.load(aliases)
