@@ -4,25 +4,34 @@ import sys
 import json
 
 import pyuac
+
 import utils.createFiglet as figlet
-import utils.loadModule as module
+import utils.module
+import utils.module.checkModulePermission
+import utils.module.loadModule as module
 import utils.random
 
-def main() -> None:
-    printWelcomeMessage()
-    command = []
-    while (command == []):
-        if len(sys.argv) == 1 :
-            command = str(input("Command : ")).split()
-            while (command == []):
-                print("Press Ctrl+C or type exit to exit")
-                command = str(input("Command : ")).split()
-        else: command = sys.argv[1::]    
-    if command[0].lower() == 'exit':
+def main(parameters) -> None:
+    if parameters[0].lower() == 'exit':
         print("Exiting...")
     else:
         run(command)
         print()
+
+@pyuac.main_requires_admin(return_output=True)
+def main_with_admin(parameters) -> None:
+    main(parameters)
+
+def getCommand(parameters) -> list[str]:
+    command = []
+    while (command == []):
+        if len(parameters) == 1 :
+            command = str(input("Command : ")).split()
+            while (command == []):
+                print("Press Ctrl+C or type exit to exit")
+                command = str(input("Command : ")).split()
+        else: command = parameters[1::] 
+    return command   
 
 def printWelcomeMessage () -> None:
     conf = json.load(open("./configs/conf.json"))
@@ -37,9 +46,13 @@ def printWelcomeMessage () -> None:
 
     print ("~" * len(conf['DESC']))
 
+
+def getCommandPath(commandName) -> str:
+    return os.path.join(str(pathlib.Path(__file__).parent.resolve()),"commands", commandName + ".py")
+
 def run(commandArray) -> None:
     commandName = commandArray[0]
-    commandPath = os.path.join(str(pathlib.Path(__file__).parent.resolve()),"commands", commandName + ".py")
+    commandPath = getCommandPath(commandName)
 
     if os.path.isfile(commandPath) :
         command = module.load(commandPath, commandName)
@@ -48,6 +61,8 @@ def run(commandArray) -> None:
         print("Could not find the command " + commandName)
 
 if __name__ == "__main__":
-    if not pyuac.admin.isUserAdmin():
-        pyuac.admin.runAsAdmin()
-    main()
+    printWelcomeMessage()
+    command = getCommand(sys.argv)
+    if utils.module.checkModulePermission.requireAdmin(getCommandPath(command[0]), command[0]): main_with_admin(command)
+    else: main(command)
+

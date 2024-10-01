@@ -12,11 +12,9 @@ import utils.wsl
 import utils.wsl.online
 
 
-def main(parameters) -> None:
+REQUIRE_ADMIN = True
 
-    # Needs to be admin
-    if not pyuac.admin.isUserAdmin():
-        pyuac.admin.runAsAdmin()
+def main(parameters) -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("service", type=str, nargs='?')

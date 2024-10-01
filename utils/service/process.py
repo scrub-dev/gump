@@ -12,7 +12,6 @@ def execute(service, verb) -> bool :
     if state == SERVICE.STATUS.INVALID:
         return
     
-
     if verb == 'start':
         if state != SERVICE.STATUS.SERVICE_RUNNING:
             printer.console(f"Starting {service['name']} on {service['env']}", 2)

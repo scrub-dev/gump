@@ -7,6 +7,7 @@ class STATUS(Enum):
     SERVICE_START_PENDING = 2
     SERVICE_RUNNING = 4
     INVALID = 0
+    SERVICE_PAUSED = 7
 
     def text(input) -> str:
         if input == 1: return "Stopped"
@@ -14,6 +15,7 @@ class STATUS(Enum):
         elif input == 3: return "Pending Stop"
         elif input == 4: return "Stopped"
         elif input == 0: return "Invalid"
+        elif input == 7: return "Paused"
 
 def execute(service) -> bool :
     if service['env'] == 'win':
