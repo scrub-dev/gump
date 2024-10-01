@@ -1,9 +1,6 @@
 import argparse
 import json
-import pyuac.admin
-import pyuac
 import itertools
-import asyncio
 import utils.service.enable
 import utils.service.disable
 import utils.service.process
