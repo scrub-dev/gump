@@ -1,9 +1,14 @@
-import asyncio
 import win32serviceutil
+import utils
+import utils.printer
+import utils.wsl
+import utils.wsl.instance
+import utils.wsl.online
 
 def execute(service) -> bool :
     if service['env'] == 'win':
         win32serviceutil.StopService(service['name'])
     elif service['env'] == 'wsl':
-        return
+        if utils.wsl.online.check(): utils.wsl.instance.run(f"sudo systemctl stop {service['name']}")
+        else: utils.printer.console(f"WSL Instance not running... ignoring {service['name']}")
     return True

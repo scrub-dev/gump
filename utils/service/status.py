@@ -1,5 +1,8 @@
 from enum import Enum
 import win32serviceutil
+import utils
+import utils.wsl
+import utils.wsl.instance
 
 class STATUS(Enum):
     SERVICE_STOPPED = 1
@@ -21,5 +24,5 @@ def execute(service) -> bool :
     if service['env'] == 'win':
         (serviceType, currentState, controlsAccepted, exitCode, serviceSpecificExitCode, checkPoint, waitHint) = win32serviceutil.QueryServiceStatus(service['name'])
     elif service['env'] == 'wsl':
-        currentState = 0
+        currentState = 4 if utils.wsl.instance.getServiceStatus(service['name']) else 1
     return currentState

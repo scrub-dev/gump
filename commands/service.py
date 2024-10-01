@@ -11,7 +11,6 @@ import utils.printer as printer
 import utils.wsl
 import utils.wsl.online
 
-
 REQUIRE_ADMIN = True
 
 def main(parameters) -> None:

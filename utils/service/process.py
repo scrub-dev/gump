@@ -7,7 +7,7 @@ import utils.service.status as SERVICE
 def execute(service, verb) -> bool :
 
     # return await utils.service.status.execute(service)
-    state = SERVICE.STATUS(utils.service.status.execute(service))
+    state = SERVICE.STATUS(SERVICE.execute(service))
 
     if state == SERVICE.STATUS.INVALID:
         return
