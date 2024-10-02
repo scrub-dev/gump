@@ -1,7 +1,6 @@
 import subprocess
 import re
 import os
-import pexpect.popen_spawn
 import utils
 import utils.printer
 import utils.wsl
