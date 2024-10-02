@@ -11,10 +11,9 @@ def run(command):
         return subprocess.check_output(f"wsl exec /bin/bash -c \"{command}\"", text=True, shell=True)
     else: utils.printer.console(f"WSL Instance offline, not running wsl command",2)
 def runWithSudoPasswdWrapperNoOutput(command):
-    val = os.getenv('VAR1', "")
+    val = os.getenv('VAR1', "Core!")
     if utils.wsl.online.check():
-        subprocess.run(f"wsl exec /bin/bash -c \"echo {val} | sudo -S {command}\"", stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-        return
+        return subprocess.check_output(f"wsl exec /bin/bash -c \"echo {val} | sudo -S {command}\"", stderr = subprocess.DEVNULL)
     else: utils.printer.console(f"WSL Instance offline, not running wsl command",2)
 def getServiceStatus(serviceName):
     x = run(f"sudo service --status-all | grep -i {serviceName}").strip()

@@ -9,6 +9,6 @@ def execute(service) -> bool :
     if service['env'] == 'win':
         win32serviceutil.StopService(service['name'])
     elif service['env'] == 'wsl':
-        if utils.wsl.online.check(): utils.wsl.instance.runWithSudoPasswdWrapperNoOutput(f"sudo systemctl stop {service['name']}")
+        if utils.wsl.online.check(): utils.wsl.instance.runWithSudoPasswdWrapperNoOutput(f"systemctl stop {service['name']}")
         else: utils.printer.console(f"WSL Instance not running... ignoring {service['name']}")
     return True
