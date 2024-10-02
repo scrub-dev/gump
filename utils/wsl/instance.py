@@ -1,3 +1,5 @@
+import json
+import os
 import subprocess
 import re
 
@@ -12,17 +14,17 @@ def run(command):
     if utils.wsl.online.check():
         return subprocess.check_output(f"wsl exec /bin/bash -c \"{command}\"", text=True, shell=True)
     else: utils.printer.console(f"WSL Instance offline, not running wsl command",2)
-def runWithInput(command, input):
-    if utils.wsl.online.check():
-        return subprocess.check_output(f"wsl exec /bin/bash -c \"{command}\"", text=True, shell=True)
+def runWithSudoPasswdWrapperNoOutput(command):
+    with open("./configs/wsl/conf.json") as conf:
+        conf = json.load(conf)
+        val = conf["VAL"]
 
-        # x = pexpect.popen_spawn.PopenSpawn(f"wsl exec /bin/bash -c \"{command}\"", input="Core!")
-        # x.expect("password")
-        # x.sendline("Core!")
+    if utils.wsl.online.check():
+        subprocess.run(f"wsl exec /bin/bash -c \"echo {val} | sudo -S {command}\"", stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
         return
     else: utils.printer.console(f"WSL Instance offline, not running wsl command",2)
 def getServiceStatus(serviceName):
-    x = run(f"service --status-all | grep -i {serviceName}").strip()
+    x = run(f"sudo service --status-all | grep -i {serviceName}").strip()
     return re.search("\[(.*?)\]", x).group(1).strip() == "+"
 
 def getAllServiceStatus():

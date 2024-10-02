@@ -1,5 +1,5 @@
 {
-    "core": ["win:nginx-service", "wsl:nginx"],
+    "core": ["win:nginx-service", "wsl:nginx", "wsl:opensearch"],
     "php":  ["win:apache", "wsl:apache2"],
-    "magento": ["win:apache", "wsl:apache2"]
+    "magento": ["win:apache", "wsl:apache2", "wsl:elasticsearch"]
 }

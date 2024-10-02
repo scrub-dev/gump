@@ -71,9 +71,8 @@ def main(parameters) -> None:
              processConflicts(args.conflicts)
         processServices(args.service, args.verb)
         return
-    process()
 
-    utils.wsl.online.check()
+    process()
 
 def help() -> None:
     return
