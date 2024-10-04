@@ -1,6 +1,7 @@
 import argparse
 import json
 import itertools
+import utils.getFile
 import utils.service.enable
 import utils.service.disable
 import utils.service.process
@@ -21,7 +22,7 @@ def main(parameters) -> None:
         print("No Service provided... stopping")
         return
     
-    with open("./configs/service/conf.json") as conf:
+    with open(utils.getFile.config("conf.json","service")) as conf:
         conf = json.load(conf)
         DEFAULT_VERB = conf['DEFAULT_VERB'] or "start"
         DEFAULT_ENV = conf['DEFAULT_ENV'] or "win"
@@ -50,11 +51,11 @@ def main(parameters) -> None:
 
     printer.console(f"Changing services for {','.join(args.service)}")
 
-    with open("./configs/service/aliases.json") as aliases:
+    with open(utils.getFile.config("aliases.json","service")) as aliases:
         aliases = json.load(aliases)
         args.service = list(itertools.chain.from_iterable(e for e in [getalias(s, aliases) for s in args.service] if e is not None))
 
-    with open("./configs/service/conflicts.json") as conflicts:
+    with open(utils.getFile.config("conflicts.json","service")) as conflicts:
         conflicts = json.load(conflicts)
         args.conflicts = list(itertools.chain.from_iterable(e for e in [getconflicts(s, conflicts) for s in args.service] if e is not None))
 

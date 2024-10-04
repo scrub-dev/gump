@@ -6,6 +6,7 @@ import json
 import pyuac
 
 import utils.createFiglet as figlet
+import utils.getFile
 import utils.module
 import utils.module.checkModulePermission
 import utils.module.loadModule as module
@@ -37,12 +38,12 @@ def getCommand(parameters) -> list[str]:
     return command   
 
 def printWelcomeMessage () -> None:
-    conf = json.load(open("./configs/conf.json"))
+    conf = json.load(open(utils.getFile.config("conf.json")))
     print(figlet.create(conf['NAME'].upper()) + "v" + conf["VERSION"])
     print ("~" * len(conf['DESC']))
     print(conf['DESC'])
 
-    with open("./configs/motds.json") as motds:
+    with open(utils.getFile.config("motds.json")) as motds:
         motds = json.load(motds)
         motd = utils.random.array(motds['hints'])
         print(motd)
