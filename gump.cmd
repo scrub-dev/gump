@@ -1,3 +1,5 @@
-@echo off 
+@echo off
+SETLOCAL
 set VAR1=Core!
-py ./gump.py %*
+%~dp0venv\Scripts\Python.exe gump.py %*
+ENDLOCAL
