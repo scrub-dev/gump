@@ -13,5 +13,3 @@ def check() -> bool:
         conf = json.load(conf)
         MAIN_INSTANCE = conf['MAIN_INSTANCE']
     return next((x for x in getWSLInstances() if x['name'] == MAIN_INSTANCE), None)['status']
-
-
