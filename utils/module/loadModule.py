@@ -1,4 +1,5 @@
 import importlib.util
+import logging
 from types import ModuleType
 import inspect
 import utils
@@ -14,8 +15,8 @@ def load(source, modulename) -> ModuleType:
 def run(module: ModuleType, parameters) -> None:
 
     if "main" in module.__dir__():
-
-        setattr(module, "logger", utils.logging.log.getLogger())
+        if 'logger' in module.__annotations__ and module.__annotations__['logger'] is type(logging.Logger):
+            setattr(module, "logger", utils.logging.log.getLogger())
 
         utils.logging.log.getCommandLogger().info(f"Command: {module.__name__} - Parameters: {parameters}")
         if len(inspect.getfullargspec(module.__getattribute__("main")).args) == 0: module.__getattribute__("main")()

@@ -19,5 +19,5 @@ To utilise it in the command, at the top of the file add:
 logger: logging.Logger
 ```
 The boilerplate example above includes this addition.
-The Logger will still be available if this is not included but will warn you about not the logger not being referenced!
+To use the logger, you need tyo include this or the logger will not be injected!
 
