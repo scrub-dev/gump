@@ -1,9 +1,11 @@
+import logging
 import os
+logger: logging.Logger
 
 
 def main (parameters: list) -> None:
     print("Hello from helloworld.py")
-    print(os.environ)
+    print(logger)
 
 
 def help() -> None:
