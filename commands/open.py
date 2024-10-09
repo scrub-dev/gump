@@ -6,9 +6,9 @@ logger: logging.Logger
 def main (parameters: list) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("main", help="Provide a preset, url or site name")
-    parser.add_argument("-t", "--type", help="Type of site (core/magento/etc) Not needed if providing a preset or url")
-    parser.add_argument("-b", "--browser", help="Open a specific browser or enter 'all' to open all browsers")
-    parser.add_argument("-n", "--name", help="Require a specific basename for site name, use")
+    parser.add_argument("-t", "--type", help="Type of site (core/magento/etc) Not needed if providing a preset or url", required=False)
+    parser.add_argument("-b", "--browser", help="Open a specific browser or enter 'all' to open all browsers", required=False)
+    parser.add_argument("-n", "--name", help="Require a specific basename for site name, use", required=False)
 
     parser.parse_args(parameters)
 
@@ -32,10 +32,6 @@ def main (parameters: list) -> None:
         #if all, run open with all browsers
         #if set, open with set browser
         #if not set, open with default browser
-
-
-
-
 
 def help() -> None:
     print("Open Command!")
