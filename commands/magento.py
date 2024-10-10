@@ -1,0 +1,1 @@
+#bin/magento s:up && bin/magento setup:di:compile && bin/magento setup:static-content:deploy -f && bin/magento c:f

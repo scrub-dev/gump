@@ -10,6 +10,8 @@ def main(parameters) -> None:
 
     print(args)
 
+    #https://random-word-api.herokuapp.com/word?number=5
+
 def help() -> None:
     print("Generates a password")
     print("Usage: password [length] -c/--characters=[Aa0!]")
