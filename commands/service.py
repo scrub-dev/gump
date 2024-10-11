@@ -12,6 +12,8 @@ import utils.wsl.online
 
 REQUIRE_ADMIN = True
 
+#TODO: Add checks to see if a service exists. Maybe just wrap in trys.
+
 def main(parameters) -> None:
 
     parser = argparse.ArgumentParser()

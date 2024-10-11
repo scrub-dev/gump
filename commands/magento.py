@@ -17,6 +17,12 @@ def main(params: list) -> None:
     with open(utils.getFile.config("conf.json", "magento")) as conf:
         conf = json.load(conf)
 
+
+
+
+    #TODO: Add safety check to see if WSL is alive if WSL is env.
+    
+
     # removes invalid commands, checks for aliases first, creates a flat array of all command shorthands,
     # alias refers to shorthand, not full commands
     # making everything a single nested list comprehension if possible because... its still more readable than magento code...
@@ -41,7 +47,7 @@ def main(params: list) -> None:
     [subprocess.call(command) for command in commands]
 
 
-    print("Done!")
+    print("\nDone!")
 
     return
 

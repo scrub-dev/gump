@@ -1,6 +1,11 @@
 # gump password length [optional charsets / default A-Za-z0-9]
 import argparse
 
+
+#TODO: Implement Basic Secure String Password Generation
+#TODO: Add options to generate passwords based on word length
+#      --> Include sprinkling punctuation to increase entropy
+
 def main(parameters) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('length', type=int, required=True)
