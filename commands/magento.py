@@ -22,33 +22,14 @@ def main(params: list) -> None:
     # if false short circuit and return error.
     #TODO: Add safety check to see if WSL is alive if WSL is env.
     #TODO: Check if site is a valid site. or error gracefully
-    #TODO: Manage Grunt Implementation
 
-
-    #{conf['environments'][conf['magento_env']]}
-    # if str(args.commands).lower() == 'grunt':
-    #     commands = ([f"wsl exec --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}" 
-    #     for x in [conf["commands"][x] for x in list(
-    #         itertools.chain.from_iterable(
-    #             e for e in [conf["aliases"][command].split(",") 
-    #             if command in conf["aliases"] 
-    #             else [command] 
-    #             for command in args.commands.split(",")]
-    #         )) if x in conf["commands"]]])
-        
-    #     print(commands)
-    #     return
-
-    # removes invalid commands, checks for aliases first, creates a flat array of all command shorthands,
-    # alias refers to shorthand, not full commands
-    # making everything a single nested list comprehension if possible because... its still more readable than magento code...
-
-
-    #TODO: Change grunt from a hard conf value to a lookup when command is ran ie: whereis grunt
-
-
+    # right so... running wsl exec provides different $PATH than in terminal... currently implementing a work around but make sure your grunt cli in wsl is on global npm and not nvm.
+    # if it is in nvm, change `using_nvm` in the conf and populate `nvm_grunt_path` with the output of `whereis grunt` inside wsl
     magentoCommand = lambda x: f"{conf['environments'][conf['magento_env']]} {conf['magento_site_root']}{args.site}/{conf['magento_site_bin']} {x}"
-    gruntCommand = lambda x: f"wsl exec {conf['grunt_route']} --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}"
+
+    gruntCommand = lambda x:f"wsl exec {conf['nvm_grunt_route']} --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}" \
+                            if conf["using_nvm"] \
+                            else f"wsl -- grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}"
 
     commands = ([(magentoCommand(x) if str(x.split(' ')[0]).lower() != 'grunt' else gruntCommand(x))
         for x in [conf["commands"][x] for x in list(
@@ -68,7 +49,7 @@ def main(params: list) -> None:
     print()    
     # subprocess.call(commands)
 
-    [subprocess.call(command) for command in commands]
+    [subprocess.run(command, shell=True) for command in commands]
 
 
     print("\nDone!")
