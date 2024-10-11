@@ -6,7 +6,6 @@ import utils.getFile
 import subprocess
 
 import utils.printer
-#bin/magento s:up && bin/magento setup:di:compile && bin/magento setup:static-content:deploy -f && bin/magento c:f 
 
 def main(params: list) -> None:
     parser = argparse.ArgumentParser()
@@ -39,7 +38,6 @@ def main(params: list) -> None:
                 else [command] 
                 for command in args.commands.split(",")]
             )) if x in conf["commands"]]])
-    # print(commands)#
 
     utils.printer.console(f"Site: {args.site}")
     utils.printer.console(f"Site Environment: {conf['magento_env']}")
@@ -48,12 +46,8 @@ def main(params: list) -> None:
     [utils.printer.console(c,2) for c in commands]
     print()    
     # subprocess.call(commands)
-
-    [subprocess.run(command, shell=True) for command in commands]
-
-
+    [subprocess.call(command) for command in commands]
     print("\nDone!")
-
     return
 
 def help():
