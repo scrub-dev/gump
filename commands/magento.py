@@ -17,12 +17,12 @@ def main(params: list) -> None:
     with open(utils.getFile.config("conf.json", "magento")) as conf:
         conf = json.load(conf)
 
-
-
-
+    # get env, if env wsl
+    # utils.wsl.online.check
+    # if false short circuit and return error.
     #TODO: Add safety check to see if WSL is alive if WSL is env.
-    
-
+    #TODO: Check if site is a valid site. or error gracefully
+    #TODO: Manage Grunt Implementation
     # removes invalid commands, checks for aliases first, creates a flat array of all command shorthands,
     # alias refers to shorthand, not full commands
     # making everything a single nested list comprehension if possible because... its still more readable than magento code...

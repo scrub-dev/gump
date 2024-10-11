@@ -3,6 +3,7 @@ import argparse
 
 def main(parameters) -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument('verb', type=str, choices=["edit", "show  "])
     parser.add_argument('group_file', type=str)
     parser.add_argument('kv_pair', type=str)
 

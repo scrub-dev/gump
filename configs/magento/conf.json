@@ -10,9 +10,13 @@
         "sup": "s:up",
         "di": "setup:di:compile",
         "d": "setup:static-content:deploy -f",
-        "cf" : "c:f"
+        "cf" : "c:f",
+        "gea": "grunt exec:all",
+        "gl" : "grunt less",
+        "gw" : "grunt watch"
     },
     "aliases":{
-        "all": "sup,di,d,cf"
+        "all": "sup,di,d,cf",
+        "grunt": "gea,gl,gw"
     }
 }
