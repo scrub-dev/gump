@@ -2,7 +2,7 @@
     "magento_env": "wsl",
     "magento_site_root": "/var/php/sites/",
     "magento_site_bin": "bin/magento",
-    "using_nvm": false,
+    "using_nvm": true,
     "nvm_grunt_route": "/var/play/.nvm/versions/node/v22.8.0/bin/grunt",
     "environments": {
         "wsl": "wsl exec",
