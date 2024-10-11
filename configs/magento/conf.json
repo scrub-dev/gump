@@ -2,15 +2,17 @@
     "magento_env": "wsl",
     "magento_site_root": "/var/php/sites/",
     "magento_site_bin": "bin/magento",
+    "grunt_route": "/var/play/.nvm/versions/node/v22.8.0/bin/grunt",
     "environments": {
         "wsl": "wsl exec",
         "win": ""
     },
     "commands" : {
         "sup": "s:up",
-        "di": "setup:di:compile",
-        "d": "setup:static-content:deploy -f",
+        "di" : "setup:di:compile",
+        "d"  : "setup:static-content:deploy -f",
         "cf" : "c:f",
+        "dws": "deploy:mode:show",
         "gea": "grunt exec:all",
         "gl" : "grunt less",
         "gw" : "grunt watch"
