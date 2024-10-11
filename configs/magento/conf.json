@@ -1,0 +1,18 @@
+{
+    "magento_env": "wsl",
+    "magento_site_root": "/var/php/sites/",
+    "magento_site_bin": "bin/magento",
+    "environments": {
+        "wsl": "wsl exec",
+        "win": ""
+    },
+    "commands" : {
+        "sup": "s:up",
+        "di": "setup:di:compile",
+        "d": "setup:static-content:deploy -f",
+        "cf" : "c:f"
+    },
+    "aliases":{
+        "all": "sup,di,d,cf"
+    }
+}
