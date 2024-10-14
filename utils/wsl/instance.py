@@ -21,3 +21,13 @@ def getServiceStatus(serviceName):
 
 def getAllServiceStatus():
     run(f"service --status-all")
+
+
+# TODO CHECK AND VERIFY THIS WORKS
+def getCommandRoute(binName):
+    x = run(f"whereis {binName}")
+    print(x)
+    return x
+
+def isCommandAvailable(binName):
+    return

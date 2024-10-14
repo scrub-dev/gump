@@ -3,7 +3,7 @@ import utils.service.disable
 import utils.service.enable
 import utils.service.status as SERVICE
 
-
+#TODO: CHECK IF THE SERVICE EXISTS FIRST
 def execute(service, verb) -> bool :
 
     # return await utils.service.status.execute(service)

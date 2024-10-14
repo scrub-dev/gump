@@ -26,3 +26,5 @@ def execute(service) -> bool :
     elif service['env'] == 'wsl':
         currentState = 4 if utils.wsl.instance.getServiceStatus(service['name']) else 1
     return currentState
+
+# TODO: status.exists(service)
