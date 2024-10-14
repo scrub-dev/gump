@@ -24,18 +24,21 @@ def main(params: list) -> None:
 
     # right so... running wsl exec provides different $PATH than in terminal... currently implementing a work around but make sure your grunt cli in wsl is on global npm and not nvm.
     # if it is in nvm, change `using_nvm` in the conf and populate `nvm_grunt_path` with the output of `whereis grunt` inside wsl
+    # grunt only works in wsl at the minute... so if you're not using wsl, you're out of luck. Run them manually.
+
+    #wsl -e /bin/bash -c 'export PATH="/test:$PATH"; echo $PATH'
     magentoCommand = lambda x: f"{conf['environments'][conf['magento_env']]} {conf['magento_site_root']}{args.site}/{conf['magento_site_bin']} {x}"
 
-    gruntCommand = lambda x:f"wsl exec {conf['nvm_grunt_route']} --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}" \
+    gruntCommand = lambda x:f"wsl exec bash -c 'export PATH=\"{conf['nvm_grunt_route']}:$PATH\"; grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}'" \
                             if conf["using_nvm"] \
                             else f"wsl -- grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}"
 
     commands = ([(magentoCommand(x) if str(x.split(' ')[0]).lower() != 'grunt' else gruntCommand(x))
         for x in [conf["commands"][x] for x in list(
             itertools.chain.from_iterable(
-                e for e in [conf["aliases"][command].split(",") 
-                if command in conf["aliases"] 
-                else [command] 
+                e for e in [conf["aliases"][command].split(",")
+                if command in conf["aliases"]
+                else [command]
                 for command in args.commands.split(",")]
             )) if x in conf["commands"]]])
 
@@ -44,12 +47,11 @@ def main(params: list) -> None:
     utils.printer.console(f"Site Location: {conf['magento_site_root']}{args.site}/")
     utils.printer.console("Command" + ('s' if len(commands) > 1 else ''))
     [utils.printer.console(c,2) for c in commands]
-    print()    
-    # subprocess.call(commands)
+    print()
     [subprocess.call(command) for command in commands]
     print("\nDone!")
     return
 
 def help():
 
-    return 
+    return
