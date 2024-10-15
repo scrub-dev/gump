@@ -37,3 +37,10 @@ General config json files are stored in the root directory. Configs specific to 
 
 ## Issues
 Pywin32 might need its postinstall script ran, this is found in `venv/Scripts/pywin32_postinstall.py`
+
+
+
+## Todo
+
+- [ ] Error Checking
+- [ ] workspace command: Has a shortlist conf for opening workspaces in wsl and windows.

@@ -1,8 +1,6 @@
-# gump password length [optional charsets / default A-Za-z0-9]
 import argparse
 import json
 import os
-import re
 import utils
 import utils.getFile
 import utils.printer
