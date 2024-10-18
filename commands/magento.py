@@ -7,6 +7,19 @@ import subprocess
 
 import utils.printer
 
+
+
+
+def parseCommandType(x: str, commandList):
+    y = str(x.split(' ')[0]).lower()
+    if y == 'grunt':
+        return commandList[1](x)
+    elif y == 'composer':
+        return commandList[2](x)
+    else: return commandList[0](x)
+        
+
+    
 def main(params: list) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("site", type=str)
@@ -32,8 +45,11 @@ def main(params: list) -> None:
     gruntCommand = lambda x:f"wsl exec bash -c 'export PATH=\"{conf['nvm_grunt_route']}:$PATH\"; grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}'" \
                             if conf["using_nvm"] \
                             else f"wsl -- grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}"
+    composerCommand = lambda x:f"wsl exec bash -c 'cd {conf['magento_site_root']}{args.site}; composer {x.split(' ')[1]}'"
 
-    commands = ([(magentoCommand(x) if str(x.split(' ')[0]).lower() != 'grunt' else gruntCommand(x))
+    commandList = [magentoCommand, gruntCommand, composerCommand]
+
+    commands = ([ parseCommandType(x, commandList)
         for x in [conf["commands"][x] for x in list(
             itertools.chain.from_iterable(
                 e for e in [conf["aliases"][command].split(",")

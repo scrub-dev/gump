@@ -16,7 +16,9 @@
         "dws": "deploy:mode:show",
         "gea": "grunt exec:all",
         "gl" : "grunt less",
-        "gw" : "grunt watch"
+        "gw" : "grunt watch",
+        "ci" : "composer install",
+        "cu" : "composer update"
     },
     "aliases":{
         "all": "sup,di,d,cf",
