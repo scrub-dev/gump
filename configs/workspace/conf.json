@@ -1,5 +1,7 @@
 {
-    "env": "wsl",
-    "base": "/var/play/sites",
-    "vsc_loc": "/mnt/c/Users/scottd/tools/Microsoft\\ VS\\ Code/bin/code --disable-gpu"
+    "default_env": "wsl",
+    "wsl_base": "/var/play/sites",
+    "wsl_loc": "/mnt/c/Users/scottd/tools/Microsoft\\ VS\\ Code/bin/code --disable-gpu",
+    "win_base": "L:\\sites",
+    "win_loc":"\"C:\\Users\\scottd\\tools\\Microsoft VS Code\\bin\\code\" --disable-gpu"
 }
