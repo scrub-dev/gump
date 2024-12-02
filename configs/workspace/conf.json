@@ -1,7 +1,9 @@
 {
-    "default_env": "wsl",
-    "wsl_base": "/var/play/sites",
-    "wsl_loc": "/mnt/c/Users/scottd/tools/Microsoft\\ VS\\ Code/bin/code --disable-gpu",
-    "win_base": "L:\\sites",
-    "win_loc":"\"C:\\Users\\scottd\\tools\\Microsoft VS Code\\bin\\code\" --disable-gpu"
+    "wsl_code" : "/mnt/c/Users/scottd/tools/Microsoft\\ VS\\ Code/bin/code --disable-gpu",
+    "win_code" : "\"C:\\Users\\scottd\\tools\\Microsoft VS Code\\bin\\code\" --disable-gpu",
+    "places_to_look":[
+        {"name":"core", "location": "/var/play/sites", "env":"wsl"},
+        {"name":"php", "location": "L:\\sites", "env": "win"},
+        {"name":"projects", "location": "D:\\Projects", "env":"win"}
+    ]
 }
