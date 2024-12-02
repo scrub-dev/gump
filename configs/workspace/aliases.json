@@ -1,6 +1,6 @@
 {
     "aliases": {
-        "crt": {"name":"canalandrivertrust", "env":"wsl"},
-        "oasis" : {"name" : "oasis", "env": "win"}
+        "crt": {"name":"canalandrivertrust"},
+        "oasis" : {"name" : "oasis"}
     }
 }
