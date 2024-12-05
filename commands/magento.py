@@ -23,7 +23,7 @@ def parseCommandType(x: str, commandList):
 def main(params: list) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("site", type=str)
-    parser.add_argument("commands", type=str)
+    parser.add_argument("commands", type=str, nargs="*")
     args = parser.parse_args(params)
 
     with open(utils.getFile.config("conf.json", "magento")) as conf:
@@ -48,6 +48,19 @@ def main(params: list) -> None:
     composerCommand = lambda x:f"wsl exec bash -c 'cd {conf['magento_site_root']}{args.site}; composer {x.split(' ')[1]}'"
 
     commandList = [magentoCommand, gruntCommand, composerCommand]
+
+
+    args.commands = ' '.join(args.commands)
+    if(args.commands == ""):
+        try:
+            print(conf["aliases"]["default"])
+            utils.printer.console("No Commands providing, running default")
+            args.commands = "default"
+        except:
+            utils.printer.console("Default Alias not found")
+            utils.printer.console("Create a default alias or specific a command / list of commands")
+            return
+    
 
     commands = ([ parseCommandType(x, commandList)
         for x in [conf["commands"][x] for x in list(

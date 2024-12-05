@@ -1,6 +1,6 @@
 {
     "aliases": {
         "crt": {"name":"canalandrivertrust"},
-        "oasis" : {"name" : "oasis"}
+        "snap" : {"name" : "snaparazzi"}
     }
 }

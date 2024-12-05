@@ -1,3 +1,4 @@
 {
-    "MAIN_INSTANCE": "WSL-Core-Dev"
+    "MAIN_INSTANCE": "WSL-Core-Dev",
+    "PROCESS_VIEWER_LIST":["htop","bashtop"]
 }

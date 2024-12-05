@@ -21,7 +21,7 @@
         "cu" : "composer update"
     },
     "aliases":{
-        "mag": "sup,di,d,cf",
+        "default": "sup,di,d,cf",
         "grunt": "gea,gl,gw",
         "all" : "sup,di,d,cf,gea,gl,gw",
         "release" : "ci,sup,di,d,sup"
