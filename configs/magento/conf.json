@@ -25,5 +25,10 @@
         "grunt": "gea,gl,gw",
         "all" : "sup,di,d,cf,gea,gl,gw",
         "release" : "ci,sup,di,d,sup"
+    },
+    "sites":{
+        "default" : {"php_version": "8.3"},
+        "oasis" :   {"php_version": "8.2"},
+        "epoch" :   {"php_version": "8.3"}
     }
 }

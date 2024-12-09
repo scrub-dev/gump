@@ -40,12 +40,19 @@ def main(params: list) -> None:
     # grunt only works in wsl at the minute... so if you're not using wsl, you're out of luck. Run them manually.
 
     #wsl -e /bin/bash -c 'export PATH="/test:$PATH"; echo $PATH'
-    magentoCommand = lambda x: f"{conf['environments'][conf['magento_env']]} {conf['magento_site_root']}{args.site}/{conf['magento_site_bin']} {x}"
+
+    #phpver magentopath command
+
+    def getSitePhpVer(site: str):
+        if(site in conf["sites"]): return "php"+conf["sites"][site]["php_version"]
+        else: return "php"+conf["sites"]["default"]["php_version"] 
+
+    magentoCommand = lambda x: f"{conf['environments'][conf['magento_env']]} {getSitePhpVer(args.site)} {conf['magento_site_root']}{args.site}/{conf['magento_site_bin']} {x}"
 
     gruntCommand = lambda x:f"wsl exec bash -c 'export PATH=\"{conf['nvm_grunt_route']}:$PATH\"; grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}'" \
                             if conf["using_nvm"] \
                             else f"wsl -- grunt --gruntfile {conf['magento_site_root']}{args.site}/Gruntfile.js {x.split(' ')[1]}"
-    composerCommand = lambda x:f"wsl exec bash -c 'cd {conf['magento_site_root']}{args.site}; composer {x.split(' ')[1]}'"
+    composerCommand = lambda x:f"wsl exec bash -c 'cd {conf['magento_site_root']}{args.site};{getSitePhpVer(args.site)} /usr/local/bin/composer {x.split(' ')[1]}'"
 
     commandList = [magentoCommand, gruntCommand, composerCommand]
 
