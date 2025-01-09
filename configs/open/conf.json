@@ -1,12 +1,7 @@
 {
-    "basename" : "scottd",
-    "basepath" : "dev.enigma.lan/",
-    "default_structure": "core",
-    "structures" : [
-        {"name": "core", "structure":"{{sitename}}.wsl.{{basename}}.{{basepath}}",  "endpoints": ["admin", "admin/kitchen-sink", ""]},
-        {"name": "magento", "structure":"{{sitename}}.{{basename}}.{{basepath}}",  "endpoints": ["admin", ""]},
-        {"name": "php", "structure":"{{sitename}}.{{basename}}.{{basepath}}",  "endpoints": ["admin", ""]}
-    ],
     "default_browser": "chrome",
-    "browsers": ["chrome", "firefox"]
+    "browsers": [
+        {"name": "chrome",  "exe_location": "chrome"},
+        {"name": "firefox", "exe_location": "firefox"}
+    ]
 }

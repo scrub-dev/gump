@@ -1,15 +1,5 @@
 {
     "presets" : [
-        {"name": "emt", "sitename": "esf", "type": "magento"},
-        {"name": "ts", "urls":["https://eu1.replicon.com/Enigma/my/timesheet/current"]},
-
-
-        {"name": "example1", "sitename": "site1", "type":"core"},
-        {"name": "example2", "sitename": "site1", "base": "name.dev.engima.lan"},
-        {"name": "example3", "urls": ["http://site1.com", "http://site2.com"] },
-        {"name": "example4", "sitename": "site1", "browser":"chrome"},
-        {"name": "example5", "sitename": "site1", "browser":"all"},
-        {"name": "example6", "sitename": "site1", "type": "php", "endpoints": ["ep1", "ep2"]},
-        {"name": "example7", "sitename": "site1", "base":"name.dev.enigma.lan", "endpoints": ["ep1", "ep2"]}
+        {"name": "morning", "urls":["https://eu1.replicon.com/Enigma/my/timesheet/current", "https://enigma-interactive.atlassian.net/plugins/servlet/ac/io.tempo.jira/tempo-app#!/planner?from=2025-01-05&to=2025-01-11&periodType=FIXED&viewType=days"]}
     ]
 }
