@@ -1,5 +1,5 @@
 {
     "presets" : [
-        {"name": "morning", "urls":["https://eu1.replicon.com/Enigma/my/timesheet/current", "https://enigma-interactive.atlassian.net/plugins/servlet/ac/io.tempo.jira/tempo-app#!/planner?from=2025-01-05&to=2025-01-11&periodType=FIXED&viewType=days"]}
+        {"name": "morning", "urls":["https://eu1.replicon.com/Enigma/my/timesheet/current", "\"https://enigma-interactive.atlassian.net/plugins/servlet/ac/io.tempo.jira/tempo-app#!/planner?periodType=FIXED&viewType=days&workerId=712020%3Ad92f8232-48e4-4096-bc9c-70c5a6668de1&workerId=6220efc9c88f1000682f2401&workerId=712020%3A5b49a101-1128-4bea-96a5-d53503218c4d\""]}
     ]
 }

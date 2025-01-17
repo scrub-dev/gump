@@ -1,6 +1,7 @@
 {
     "aliases": {
         "crt": {"name":"canalandrivertrust"},
-        "snap" : {"name" : "snaparazzi"}
+        "snap" : {"name" : "snaparazzi"},
+        "esf" : {"name": "epoch"}
     }
 }

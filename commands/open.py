@@ -3,6 +3,7 @@ import logging
 import argparse
 import subprocess
 import utils
+import utils.printer
 
 logger: logging.Logger
 
@@ -25,6 +26,7 @@ def main (parameters: list) -> None:
         presets = json.load(presets)
     websites_to_open = ([f for f in presets['presets'] if f['name'] == args.main])[0]['urls'] if args.main in [x['name'] for x in presets['presets']] else [args.main]
 
+    [utils.printer.console(f"Opening {x}") for x in websites_to_open]
     subprocess.run(formatOpenCommand(browser=browser_exe['exe_location'], websites=websites_to_open), shell=True)
 
 def formatOpenCommand(browser, websites):
