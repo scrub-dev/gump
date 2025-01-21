@@ -43,4 +43,4 @@ Pywin32 might need its postinstall script ran, this is found in `venv/Scripts/py
 ## Todo
 
 - [ ] Error Checking
-- [ ] workspace command: Has a shortlist conf for opening workspaces in wsl and windows.
+- [ ] Handling when opened without command
