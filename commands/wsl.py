@@ -20,18 +20,6 @@ def main (parameters: list) -> None:
         case _:
             invalid_command()
     return
-    # split into sub commands
-    
-    # sub command: process-viewer: proc
-
-    # get conf.json PROCESS_VIEWER_LIST list
-    # if sudo flag enabled, run as sudo
-    # for each
-        # check if installed
-        # if installed run
-        # if not installed, try next in list
-
-    # sub command: proxy into wsl: prox
 
 def help() -> None:
     print("Basic call and response command")

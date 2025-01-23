@@ -2,11 +2,6 @@
 import argparse
 import random
 
-
-#TODO: Implement Basic Secure String Password Generation
-#TODO: Add options to generate passwords based on word length
-#      --> Include sprinkling punctuation to increase entropy
-
 def main(parameters) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('-l','--len', type=int, default=0)

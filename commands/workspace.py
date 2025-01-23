@@ -14,12 +14,6 @@ import subprocess
 import utils.wsl
 import utils.wsl.utils
 
-# Env var is not specifically where it is stored but how to access the workspace or work folder.
-# IE: If it is on the L: Drive and you dont need to go through WSL, you would use WIN Env.
-# All WSL-Core Core Sites will use WSL env. Most PHP/Magento sites will use WIN.
-
-# TODO: Create a searcher that tries to find the workspace in either WSL or WIN and open it without needing to specify a environment location in aliases or use a default one in conf
-
 def main(parameters) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("workspace", type=str)
@@ -33,9 +27,14 @@ def main(parameters) -> None:
     
     name = (aliases[args.workspace]['name'] if args.workspace in aliases else args.workspace).lower()
 
-    win_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}\\{f}","env":a['env']} for f in os.listdir(a['location']) if not isfile(join(a['location'], f))]
-    wsl_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}/{f}","env":a['env']} for f in utils.wsl.utils.listDirectories(a)]
-    res = [result for result in list(chain.from_iterable([wsl_dirsInLocation(x) if (x['env'] == "wsl") else win_dirsInLocation(x) for x in conf["places_to_look"]])) if result['name'] == name]
+    win_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}\\{f}","env":a['env']} \
+                                    for f in os.listdir(a['location']) if not isfile(join(a['location'], f))]
+    
+    wsl_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}/{f}","env":a['env']} \
+                                    for f in utils.wsl.utils.listDirectories(a)]
+    
+    res = [result for result in list(chain.from_iterable([wsl_dirsInLocation(x) if (x['env'] == "wsl") else win_dirsInLocation(x) \
+                                                          for x in conf["places_to_look"]])) if result['name'] == name]
 
     if(len(res)) == 0:
         print("Project not found")

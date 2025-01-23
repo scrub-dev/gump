@@ -7,9 +7,6 @@ import subprocess
 
 import utils.printer
 
-
-
-
 def parseCommandType(x: str, commandList):
     y = str(x.split(' ')[0]).lower()
     if y == 'grunt':
@@ -17,8 +14,6 @@ def parseCommandType(x: str, commandList):
     elif y == 'composer':
         return commandList[2](x)
     else: return commandList[0](x)
-        
-
     
 def main(params: list) -> None:
     parser = argparse.ArgumentParser()
@@ -28,20 +23,6 @@ def main(params: list) -> None:
 
     with open(utils.getFile.config("conf.json", "magento")) as conf:
         conf = json.load(conf)
-
-    # get env, if env wsl
-    # utils.wsl.online.check
-    # if false short circuit and return error.
-    #TODO: Add safety check to see if WSL is alive if WSL is env.
-    #TODO: Check if site is a valid site. or error gracefully
-
-    # right so... running wsl exec provides different $PATH than in terminal... currently implementing a work around but make sure your grunt cli in wsl is on global npm and not nvm.
-    # if it is in nvm, change `using_nvm` in the conf and populate `nvm_grunt_path` with the output of `whereis grunt` inside wsl
-    # grunt only works in wsl at the minute... so if you're not using wsl, you're out of luck. Run them manually.
-
-    #wsl -e /bin/bash -c 'export PATH="/test:$PATH"; echo $PATH'
-
-    #phpver magentopath command
 
     def getSitePhpVer(site: str):
         if(site in conf["sites"]): return "php"+conf["sites"][site]["php_version"]

@@ -21,6 +21,5 @@ def main (parameters: list) -> None:
 def formatOpenCommand(base:str, jira_ticket:str):
     return f"start {base}{jira_ticket.upper()}"
     
-
 def help () -> None:
     print("Opens websites")
