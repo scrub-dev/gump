@@ -9,13 +9,14 @@ import utils.wsl.online
 def run(command):
     if utils.wsl.online.check():
         return subprocess.check_output(f"wsl exec /bin/bash -c \"{command}\"", text=True, shell=True)
-    else: utils.printer.console(f"WSL Instance offline, not running wsl command",2)
+    else: utils.printer.console(f"WSL Instance offline, not running wsl command",1)
+    return ""
 def runWithSudoPasswdWrapperNoOutput(command):
     val = os.getenv('VAR1', "Core!")
     if utils.wsl.online.check():
         return subprocess.check_output(f"wsl exec /bin/bash -c \"echo {val} | sudo -S {command}\"", stderr = subprocess.DEVNULL)
 
-    else: utils.printer.console(f"WSL Instance offline, not running wsl command",2)
+    else: utils.printer.console(f"WSL Instance offline, not running wsl command",1)
 
 def runCommand(a):
     subprocess.call(f"wsl exec /bin/bash -c \"{a}\"", shell=True)

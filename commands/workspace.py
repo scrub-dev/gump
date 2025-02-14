@@ -27,11 +27,26 @@ def main(parameters) -> None:
     
     name = (aliases[args.workspace]['name'] if args.workspace in aliases else args.workspace).lower()
 
-    win_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}\\{f}","env":a['env']} \
+    _win_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}\\{f}","env":a['env']} \
                                     for f in os.listdir(a['location']) if not isfile(join(a['location'], f))]
     
-    wsl_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}/{f}","env":a['env']} \
+    _wsl_dirsInLocation = lambda a: [{"name": f.lower(), "location" : f"{a['location']}/{f}","env":a['env']} \
                                     for f in utils.wsl.utils.listDirectories(a)]
+    
+    def win_dirsInLocation(a):
+        res = None
+        try:
+            res = _win_dirsInLocation(a);
+        except:
+            return []
+        return res if len(res) > 0 else []
+    def wsl_dirsInLocation(a):
+        res = None
+        try:
+            res = _wsl_dirsInLocation(a);
+        except:
+            return []
+        return res if len(res) > 0 else []
     
     res = [result for result in list(chain.from_iterable([wsl_dirsInLocation(x) if (x['env'] == "wsl") else win_dirsInLocation(x) \
                                                           for x in conf["places_to_look"]])) if result['name'] == name]
